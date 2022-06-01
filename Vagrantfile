@@ -1,7 +1,6 @@
 VAGRANT_COMMAND = ARGV[0]
 
 Vagrant.configure("2") do |config|
-  username = "jay"
   password = "1234"
 
   config.vm.define "router" do |router|
@@ -16,6 +15,9 @@ Vagrant.configure("2") do |config|
       vm.gui = false
       vm.memory = "1028"
     end
+
+    username = "#{ENV['USERNAME'] || `whoami`}"
+    router.vm.provision :shell, inline: "echo #{username} > /etc/profile.d/me"
 
     router.vm.provision "shell", path: "router_setup.sh"
 
