@@ -19,7 +19,7 @@ Vagrant.configure("2") do |config|
 
     router.vm.provision "shell", path: "router_setup.sh"
 
-    router.vm.provision "shell", path: "setup_user.sh", args: "#{username} #{password}"
+    router.vm.provision "shell", path: "setup_user.sh", :args => [username, password]
     if VAGRANT_COMMAND == "ssh"
       router.ssh.username = username
       router.ssh.password = password
@@ -41,7 +41,7 @@ Vagrant.configure("2") do |config|
     username = "#{ENV['USERNAME'] || `whoami`}"
     client1.vm.provision :shell, inline: "echo #{username} > /etc/profile.d/me"
 
-    client1.vm.provision "shell", path: "setup_user.sh", args: "#{username} #{password}"
+    client1.vm.provision "shell", path: "setup_user.sh", :args => [username, password]
     if VAGRANT_COMMAND == "ssh"
       client1.ssh.username = username
       client1.ssh.password = password
@@ -63,7 +63,7 @@ Vagrant.configure("2") do |config|
     username = "#{ENV['USERNAME'] || `whoami`}"
     client2.vm.provision :shell, inline: "echo #{username} > /etc/profile.d/me"
     
-    client2.vm.provision "shell", path: "setup_user.sh", args: "#{username} #{password}"
+    client2.vm.provision "shell", path: "setup_user.sh", :args => [username, password]
     
     if VAGRANT_COMMAND == "ssh"
       client2.ssh.username = username
